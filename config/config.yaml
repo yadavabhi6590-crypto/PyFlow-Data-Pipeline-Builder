@@ -1,0 +1,22 @@
+pipeline:
+  name:"PyFlow_NYC_Taxi_Pipeline"
+  chunk_size:5000
+  max_retries:3
+
+paths:
+  input_csv: "data/sample_taxi.csv"
+  input_json: "data/sample_covid.json"
+  output_dir: "output"
+  database: "output/pyflow.db"
+  log_file: "logs/pyflow.log"
+  input_csv: "D:\tutedude\Python_Project_t\PyFlow_Assignment_2\data\sample_yaxi.csv"
+
+validation:
+  required_columns:
+    -"Pickup_datatime"
+    -"dropoff_datetime"
+    -"passenger_count"
+    -"trip_distance"
+    -"fare_amount"
+  min_fare: 0.0
+  max_fare: 500.0

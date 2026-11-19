@@ -1,0 +1,39 @@
+
+
+
+# Virtual Environment
+venv/
+.venv/
+
+# Python Cache
+__pycache__/
+*.py[cod]
+.mypy_cache/
+.pytest_cache/
+
+# Environment Variables
+.env
+
+# Logs
+logs/
+*.log
+
+# Generated Outputs
+output/
+reports/
+
+# Large Datasets
+data/
+*.csv
+*.parquet
+*.xlsx
+
+# Database files
+*.db
+
+# IDE
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db

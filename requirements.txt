@@ -1,0 +1,9 @@
+pandas>=2.0.0
+pyyaml>=6.0
+openpyxl>=3.1.0
+pyarrow>=12.0.0
+chardet>=5.2.0
+pytest>=7.0.0
+mypy>=1.8.0
+tqdm>=4.65.0
+watchdog>=4.0.0
