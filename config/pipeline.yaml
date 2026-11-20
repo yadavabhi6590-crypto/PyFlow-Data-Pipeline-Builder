@@ -1,0 +1,21 @@
+extract: # Extraction section shuru
+  base_dir: "data" # Input folder
+  file_name: "converted_output.csv" # Active dataset file
+  file_type: null # Extension (.csv) se auto-detect hoga
+
+transform: # Transformation section shuru
+  datetime_col: "tpep_pickup_datetime" # CSV ka actual date/time column name daalo
+  drop_missing_subset: # CSV mein exist karne wale columns ki list
+    - "passenger_count" # Actual column 1
+    - "fare_amount" # Actual column 2
+  deduplicate: true # Duplicate rows hatane ke liye
+  filter_query: "fare_amount > 0" # CSV ke actual column par valid filter expression
+
+load: # Loader section shuru
+  output_dir: "output" # Output folder
+  file_name: "converted_output_cleaned" # Output file ka base naam
+  formats: # Output formats
+    - "csv" # CSV save hoga
+    - "parquet" # Parquet save hoga
+    - "json" # JSON save hoga
+  index: false # Row index column save nahi karna

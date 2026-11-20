@@ -6,11 +6,20 @@ class dataTransformer:
         self.df=df.copy() if df is not None else pd.DataFrame()
         logger.info (f"Datatransformer initialized with shape :{self.df.shape}")
 
-    def drop_missing(self,subset:list=None)->"dataTransformer":
-        befor = len (self.df)
-        self.df=self.df.dropna(subset=subset)
-        logger.info(f"Removedduplicate rows {befor -len(self.df):,}removed ,{len(self.df):,}remaining")
-        return self
+    def drop_missing(self, subset: list = None) -> "dataTransformer":  # Missing rows hatata hai aur chaining ke liye 'self' return karta hai
+         before = len(self.df)  # Hatane se pehle ki total rows
+         if subset is not None:  # Specific columns diye gaye hain toh
+            missing_cols = [c for c in subset if c not in self.df.columns]  # Jo column table mein nahi hai use alag nikala
+            if missing_cols:  # Missing column mila toh warning log ki
+                logger.warning(f"Columns not found for drop_missing, skipping them: {missing_cols}")  # Warning record ki
+            valid_subset = [c for c in subset if c in self.df.columns]  # Sirf maujood columns rakhe
+            if not valid_subset:  # Koi bhi column match nahi hua toh dropna skip kiya
+                return self  # Method chaining ke liye 'self' return kiya
+            self.df = self.df.dropna(subset=valid_subset)  # Valid columns par null rows hatayin
+         else:  # subset None ho toh poore DataFrame se null rows hatayega
+            self.df = self.df.dropna()  # Sabhi columns check karke null rows hatayin
+         logger.info(f"Dropped missing rows: {before - len(self.df):,} removed, {len(self.df):,} remaining")  # Result log kiya
+         return self  # Method chaining ke liye 'self' return kiya
     def remove_duplicates(self,subset:list=None)->'dataTransformer':
         before= len(self.df)
         self.df=self.df.drop_duplicates(subset=subset)
