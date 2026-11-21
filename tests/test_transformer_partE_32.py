@@ -2,7 +2,7 @@
 
 
 from pyflow.extractors import DataExtractor  # extractors.py se DataExtractor laaya
-from pyflow.transformeres import dataTransformer  # transformer.py se DataTransformer laaya
+from pyflow.transformers import dataTransformer  # transformer.py se DataTransformer laaya
 
 if __name__ == "__main__":  # Sirf direct run hone par chalega
     extractor = DataExtractor(base_dir="data")  # 'data' folder ke sath extractor banaya

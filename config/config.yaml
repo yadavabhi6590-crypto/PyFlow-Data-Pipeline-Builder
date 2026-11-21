@@ -9,7 +9,7 @@ paths:
   output_dir: "output"
   database: "output/pyflow.db"
   log_file: "logs/pyflow.log"
-  input_csv: "D:\tutedude\Python_Project_t\PyFlow_Assignment_2\data\sample_yaxi.csv"
+  input_csv: "D:\\tutedude\\Python_Project_t\\PyFlow_Assignment_2\\data\\sample_yaxi.csv"
 
 validation:
   required_columns:

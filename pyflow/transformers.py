@@ -44,3 +44,8 @@ class dataTransformer:
 
     def get_df(self) -> pd.DataFrame:
         return self.df
+
+    def filter_query(self, query: str):  # Filter method ke andar check karne ke liye
+    #   breakpoint()  # Python 3.7+ mein yahan code ruk jayega aur (Pdb) prompt khulega
+      self.df = self.df.query(query)
+      return self

@@ -1253,3 +1253,72 @@ Returns a dictionary mapping each format to its saved file path"""
     except Exception as e:
         logger.error(f"Error during exporting dataframe to {formats}: {e}")
         raise
+
+
+
+
+import logging
+from logging.handlers import RotatingFileHandler 
+from pathlib import Path
+
+def setup_logger(
+        name:str ="Pyflow",
+        log_file :str ="logs/pipeline.log",
+        max_bytes :int =5*1024 *1024,
+        backup_count : int=3,
+        level:int =logging.INFO,
+)->logging.Logger:
+    log_path =Path(log_file)
+    log_path.parent.mkdir(parents= True ,exist_ok= True)
+
+    logger =logging.getLogger(name)
+    logger.setLevel(level)
+    logger.propagate=False
+
+    if logger.handlers:
+        return logger
+
+    formatter =logging.Formatter("%(asctime)s -%(levelname)s-%(message)s")
+
+    console_handler =logging.StreamHandler()
+    console_handler.setLevel(level)
+    console_handler.setFormatter(formatter)
+
+    file_handler =RotatingFileHandler(
+        filename= log_path,
+        maxBytes=max_bytes,
+        backupCount= backup_count,
+        encoding="utf-8",
+    )
+    file_handler.setLevel(level)
+    file_handler.setFormatter(formatter)
+
+    logger.addHandler(console_handler)
+    logger.addHandler(file_handler)
+    return logger
+
+logger =setup_logger()
+
+# question 37 add erty logic with exponenetial backoff
+
+from functools import wraps  # Function ki identity bachaye rakhne ke liye
+import time  # Retry ke beech rukne ke liye
+
+
+def retry_with_backoff(max_retries=3, base_delay=1.0, backoff_factor=2.0):  # Retry decorator factory
+    def decorator(func):  # Target function ko wrap karega
+        @wraps(func)  # Original function ka naam aur metadata rakhega
+        def wrapper(*args, **kwargs):  # Retry logic ke sath function chalayega
+            delay = base_delay  # Shuruati wait time
+            for attempt in range(max_retries + 1):  # Pehli koshish + max_retries
+                try:  # Function chalane ki koshish
+                    return func(*args, **kwargs)  # Safal hone par output return
+                except Exception as exc:  # Error aane par
+                    if attempt == max_retries:  # Saari retries khatam hone par
+                        logger.error(f"{func.__name__} failed after {max_retries + 1} attempts: {exc}")  # Error log
+                        raise  # Error aage bhej diya
+                    logger.warning(f"{func.__name__} retry {attempt + 1}/{max_retries} in {delay:.1f}s ({exc})")  # Warning log
+                    time.sleep(delay)  # Utne seconds ruka
+                    delay *= backoff_factor  # Agli retry ke liye delay badhaya
+        return wrapper  # wrapper return karna zaroori hai
+    return decorator  # decorator return karna zaroori hai (None nahi)

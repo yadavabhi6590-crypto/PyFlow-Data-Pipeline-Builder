@@ -23,7 +23,7 @@ except Exception as e:
 
 
 
-from pyflow.utils import load_config, ConfigurationError,pyflowerror
+from pyflow.utils import load_config, ConfigurationError,PyFlowError
 
 
 if __name__=="__main__":
@@ -37,5 +37,5 @@ try:
 except ConfigurationError as ce:
     print(f"\n[SUCCESS]Caught Expected Custom ConfigurationError:\n->{ce}")
 
-except pyflowerror as pe:
+except PyFlowError as pe:
     print(f"\n[Success] Caught General PyFlowError: \n->{pe}")

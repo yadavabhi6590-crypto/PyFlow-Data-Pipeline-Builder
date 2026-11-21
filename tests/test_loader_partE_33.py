@@ -1,7 +1,7 @@
 
 
 from pyflow.extractors import DataExtractor  # extractors.py se DataExtractor laaya
-from pyflow.transformeres import dataTransformer  # transformeres.py se DataTransformer laaya
+from pyflow.transformers import dataTransformer  # transformeres.py se DataTransformer laaya
 from pyflow.loaders import Dataloader  # loader.py se DataLoader laaya
 
 if __name__ == "__main__":  # Sirf direct run hone par chalega

@@ -19,3 +19,8 @@ load: # Loader section shuru
     - "parquet" # Parquet save hoga
     - "json" # JSON save hoga
   index: false # Row index column save nahi karna
+
+profile:
+  enabled: true
+  output_dir: "reports"
+  report_name: "nyc_taxi_clean_profile"
